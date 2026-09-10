@@ -1,7 +1,11 @@
 export type Service = { n: string; title: string; desc: string };
 export type Solution = { n: string; title: string; desc: string };
-export type TechCategory = 'Frontend' | 'Backend' | 'Mobile' | 'Cloud & Infrastructure' | 'AI & Data';
+export type TechCategory = 'Front End' | 'Back End' | 'Mobile' | 'Cloud & Infrastructure' | 'AI & Data' | 'CMS';
 export type TechItem = { src: string; name: string; desc: string };
+// Front End and Back End split their items into Languages vs Frameworks &
+// Libraries subgroups on desktop; every other category stays a flat list.
+export type TechGroup = { label: string; items: TechItem[] };
+export type TechCategoryContent = TechItem[] | TechGroup[];
 export type Testimonial = { name: string; quote: string };
 export type Stat = { value: number; suffix: string; label: string };
 export type NavLink = { label: string; id: string };
@@ -31,31 +35,58 @@ export const solutions: Solution[] = [
   { n: '04', title: 'Integration', desc: 'Connect platforms, APIs and applications into one coherent operation.' },
 ];
 
-export const stack: Record<TechCategory, TechItem[]> = {
-  Frontend: [
-    { src: '/media/5w5fqx4n/14.png', name: 'AngularJS', desc: 'A structural framework for building dynamic single-page web applications.' },
-    { src: '/media/kcjbi1iz/15.png', name: 'jQuery', desc: 'A fast, lightweight library for DOM manipulation and event handling.' },
-    { src: '/media/ypvhjbwp/17.png', name: 'Joomla', desc: 'An open-source content management system for building websites.' },
-    { src: '/media/yjznrong/18.png', name: 'JavaScript', desc: 'The core scripting language of the web, used across browsers and servers.' },
-    { src: '/media/pkifq4nm/20.png', name: 'Knockout', desc: 'A JavaScript library that implements the MVVM pattern for rich UIs.' },
-    { src: '/media/bvnmkoud/bootstrap.png', name: 'Bootstrap', desc: 'A component library for building responsive, mobile-first interfaces.' },
+export const stack: Record<TechCategory, TechCategoryContent> = {
+  'Front End': [
+    {
+      label: 'Languages',
+      items: [
+        { src: '/media/yjznrong/18.png', name: 'JavaScript', desc: 'The core scripting language of the web, used across browsers and servers.' },
+        { src: '/media/frontend/typescript.png', name: 'TypeScript', desc: 'A typed superset of JavaScript that improves reliability at scale.' },
+      ],
+    },
+    {
+      label: 'Frameworks & Libraries',
+      items: [
+        { src: '/media/5w5fqx4n/14.png', name: 'AngularJS', desc: 'A structural framework for building dynamic single-page web applications.' },
+        { src: '/media/kcjbi1iz/15.png', name: 'jQuery', desc: 'A fast, lightweight library for DOM manipulation and event handling.' },
+        { src: '/media/pkifq4nm/20.png', name: 'Knockout', desc: 'A JavaScript library that implements the MVVM pattern for rich UIs.' },
+        { src: '/media/bvnmkoud/bootstrap.png', name: 'Bootstrap', desc: 'A component library for building responsive, mobile-first interfaces.' },
+        { src: '/media/frontend/nextjs.png', name: 'Next.js', desc: 'A React framework for building fast, production-ready web applications.' },
+        { src: '/media/frontend/react.png', name: 'React', desc: 'A component-based library for building interactive user interfaces.' },
+      ],
+    },
   ],
-  Backend: [
-    { src: '/media/xrbgf0eh/8.png', name: 'Java', desc: 'A widely used, class-based language for building portable, scalable systems.' },
-    { src: '/media/hq3hsuei/9.png', name: 'Java EE', desc: 'An enterprise extension of Java for building large-scale server applications.' },
-    { src: '/media/p2gonffj/23.png', name: 'PHP', desc: 'A server-side scripting language used to build dynamic web applications.' },
-    { src: '/media/tgsjhpqp/27.png', name: 'Python', desc: 'A general-purpose language known for readability and a broad ecosystem.' },
+  'Back End': [
+    {
+      label: 'Languages',
+      items: [
+        { src: '/media/p2gonffj/23.png', name: 'PHP', desc: 'A server-side scripting language used to build dynamic web applications.' },
+        { src: '/media/tgsjhpqp/27.png', name: 'Python', desc: 'A general-purpose language known for readability and a broad ecosystem.' },
+        { src: '/media/xrbgf0eh/8.png', name: 'Java', desc: 'A widely used, class-based language for building portable, scalable systems.' },
+        { src: '/media/hq3hsuei/9.png', name: 'Java EE', desc: 'An enterprise extension of Java for building large-scale server applications.' },
+      ],
+    },
+    {
+      label: 'Frameworks & Libraries',
+      items: [
+        { src: '/media/sccjo4pl/10.png', name: 'Spring', desc: 'A Java framework for building enterprise-grade backend applications.' },
+        { src: '/media/11djacpv/2.png', name: '.NET Core', desc: 'A cross-platform framework for building high-performance applications.' },
+        { src: '/media/backend/nodejs.png', name: 'Node.js', desc: 'A JavaScript runtime for building fast, scalable server-side applications.' },
+        { src: '/media/backend/express.png', name: 'Express.js', desc: 'A minimal, flexible framework for building Node.js web applications and APIs.' },
+        { src: '/media/backend/laravel.png', name: 'Laravel', desc: 'A PHP framework for building elegant, well-structured web applications.' },
+        { src: '/media/backend/rails.png', name: 'Ruby on Rails', desc: 'A convention-driven Ruby framework for building web applications quickly.' },
+      ],
+    },
   ],
   Mobile: [
     { src: '/media/xbugkcew/16.png', name: 'Flutter', desc: 'A UI toolkit for building natively compiled mobile apps from one codebase.' },
     { src: '/media/3ejj3dsm/26.png', name: 'React Native', desc: 'A framework for building native mobile apps using React.' },
   ],
   'Cloud & Infrastructure': [
-    { src: '/media/11djacpv/2.png', name: '.NET Core', desc: 'A cross-platform framework for building high-performance applications.' },
+    { src: '/media/aws/aws.png', name: 'AWS', desc: "Amazon's cloud platform for compute, storage and managed infrastructure services." },
     { src: '/media/xyummodr/4.png', name: 'Azure', desc: "Microsoft's cloud platform for hosting, compute and infrastructure services." },
     { src: '/media/tkiaukmx/5.png', name: 'Visual Studio', desc: 'An integrated development environment for building and debugging software.' },
     { src: '/media/vtips0op/7.png', name: 'SharePoint', desc: 'A platform for document management and enterprise collaboration.' },
-    { src: '/media/sccjo4pl/10.png', name: 'Spring', desc: 'A Java framework for building enterprise-grade backend applications.' },
   ],
   'AI & Data': [
     { src: '/media/3gxkvvij/36.png', name: 'Artificial Intelligence', desc: 'Systems and models that support automation, prediction and insight.' },
@@ -64,6 +95,11 @@ export const stack: Record<TechCategory, TechItem[]> = {
     { src: '/media/51spk1lh/3.png', name: 'Microsoft SQL Server', desc: 'A relational database engine for structured data management.' },
     { src: '/media/zxeprsh2/6.png', name: 'Power BI', desc: 'A business analytics tool for visualising and sharing data insight.' },
     { src: '/media/sygp30ef/19.png', name: 'Hadoop', desc: 'A framework for distributed storage and processing of large datasets.' },
+  ],
+  CMS: [
+    { src: '/media/ypvhjbwp/17.png', name: 'Joomla', desc: 'An open-source content management system for building websites.' },
+    { src: '/media/cms/wordpress.png', name: 'WordPress', desc: 'The most widely used content management system for building and publishing websites.' },
+    { src: '/media/cms/hubspot.png', name: 'HubSpot', desc: 'A CRM and marketing platform for managing content, campaigns and customer relationships.' },
   ],
 };
 

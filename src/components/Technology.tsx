@@ -5,18 +5,30 @@ import { AnimatePresence, motion } from 'framer-motion';
 import Reveal, { Stagger, StaggerItem } from './Reveal';
 import TechIcon from './TechIcon';
 import OptionWheel, { type OptionWheelHandle } from './OptionWheel';
-import { stack, type TechCategory } from '@/lib/content';
+import { stack, type TechCategory, type TechItem, type TechGroup } from '@/lib/content';
 import { usePrefersReducedMotion } from './useReducedMotion';
 
 const categories = Object.keys(stack) as TechCategory[];
 const DEFAULT_INDEX = categories.indexOf('Mobile');
+
+function isGrouped(content: TechItem[] | TechGroup[]): content is TechGroup[] {
+  return content.length > 0 && 'items' in content[0];
+}
+
+function flatten(content: TechItem[] | TechGroup[]): TechItem[] {
+  return isGrouped(content) ? content.flatMap((g) => g.items) : content;
+}
 
 export default function Technology() {
   const [activeIndex, setActiveIndex] = useState(DEFAULT_INDEX);
   const [direction, setDirection] = useState(1);
   const reduced = usePrefersReducedMotion();
   const active = categories[activeIndex];
-  const activeStack = useMemo(() => stack[active], [active]);
+  const activeContent = useMemo(() => stack[active], [active]);
+  const activeGroups = useMemo<TechGroup[]>(
+    () => (isGrouped(activeContent) ? activeContent : [{ label: active, items: activeContent }]),
+    [activeContent, active]
+  );
   const wheelRef = useRef<OptionWheelHandle | null>(null);
 
   // Single source of truth: activeIndex. The wheel's own interactions
@@ -99,21 +111,26 @@ export default function Technology() {
                     >›</button>
                   </div>
                 </div>
-                <Stagger
-                  className="tech-panel-grid"
-                  stagger={.04}
-                  style={{ '--tech-cols': Math.min(activeStack.length, 3) } as CSSProperties}
-                >
-                  {activeStack.map((item) => (
-                    <StaggerItem className="tech-card" key={item.src}>
-                      <span className="tech-card-badge"><TechIcon name={item.name} /></span>
-                      <div className="tech-card-body">
-                        <strong>{item.name}</strong>
-                        <span>{item.desc}</span>
-                      </div>
-                    </StaggerItem>
-                  ))}
-                </Stagger>
+                {activeGroups.map((group) => (
+                  <div className="tech-panel-group" key={group.label}>
+                    {activeGroups.length > 1 && <h4 className="tech-panel-group-label">{group.label}</h4>}
+                    <Stagger
+                      className="tech-panel-grid"
+                      stagger={.04}
+                      style={{ '--tech-cols': Math.min(group.items.length, 3) } as CSSProperties}
+                    >
+                      {group.items.map((item) => (
+                        <StaggerItem className="tech-card" key={item.src}>
+                          <span className="tech-card-badge"><TechIcon name={item.name} /></span>
+                          <div className="tech-card-body">
+                            <strong>{item.name}</strong>
+                            <span>{item.desc}</span>
+                          </div>
+                        </StaggerItem>
+                      ))}
+                    </Stagger>
+                  </div>
+                ))}
               </motion.div>
             </AnimatePresence>
           </div>
@@ -145,7 +162,7 @@ export default function Technology() {
                         transition={{ duration: .3, ease: [0.16, 1, 0.3, 1] }}
                       >
                         <ul>
-                          {stack[c].map((item) => (
+                          {flatten(stack[c]).map((item) => (
                             <li key={item.src}>
                               <span className="tech-card-badge"><TechIcon name={item.name} /></span>
                               <div className="tech-card-body">

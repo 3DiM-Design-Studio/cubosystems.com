@@ -4,7 +4,7 @@ import Hero from '@/components/Hero';
 import Trust from '@/components/Trust';
 import About from '@/components/About';
 import Cards from '@/components/Cards';
-import Solutions from '@/components/Solutions';
+import DigitalSolutions from '@/components/DigitalSolutions';
 import Process from '@/components/Process';
 import Technology from '@/components/Technology';
 import Proof from '@/components/Proof';
@@ -23,7 +23,7 @@ export default function Home() {
         <Trust />
         <About />
         <Cards />
-        <Solutions />
+        <DigitalSolutions />
         <Process />
         <Technology />
         <Proof />
