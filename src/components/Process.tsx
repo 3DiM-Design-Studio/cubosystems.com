@@ -18,6 +18,7 @@ const items: CarouselItem[] = process.map((step, i) => ({
   id: i,
   title: step.title,
   description: step.desc,
+  tags: step.tags,
   icon: (
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
       <path d={ICONS[i]} />

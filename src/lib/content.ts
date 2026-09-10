@@ -126,11 +126,11 @@ export const whyCubo = [
 ];
 
 export const process = [
-  { title: 'Discover', desc: 'We listen, learn and understand the opportunity.' },
-  { title: 'Define', desc: 'We shape a clear, viable path forward.' },
-  { title: 'Design', desc: 'We create useful, intuitive digital experiences.' },
-  { title: 'Develop', desc: 'We engineer scalable solutions with care.' },
-  { title: 'Deliver', desc: 'We launch, refine and support lasting impact.' },
+  { title: 'Discover', desc: 'We listen, learn and understand the opportunity.', tags: ['Research', 'Workshops', 'Insight'] },
+  { title: 'Define', desc: 'We shape a clear, viable path forward.', tags: ['Scope', 'Strategy'] },
+  { title: 'Design', desc: 'We create useful, intuitive digital experiences.', tags: ['UX', 'UI', 'Prototyping'] },
+  { title: 'Develop', desc: 'We engineer scalable solutions with care.', tags: ['Engineering', 'Testing'] },
+  { title: 'Deliver', desc: 'We launch, refine and support lasting impact.', tags: ['Launch', 'Support', 'Iteration'] },
 ];
 
 export const footerGroups: { title: string; links: { label: string; href: string }[] }[] = [
