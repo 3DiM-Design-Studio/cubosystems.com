@@ -10,7 +10,6 @@ export default function DigitalSolutionsPrototypePage() {
     <div className="ds-proto-page">
       <section className="ds-fake-section">
         <div className="container">
-          <p className="eyebrow">ABOUT CUBO</p>
           <h2>We build technology that businesses actually rely on.</h2>
           <p>
             This placeholder section stands in for whatever precedes Digital Solutions on the real
@@ -24,7 +23,6 @@ export default function DigitalSolutionsPrototypePage() {
 
       <section className="ds-fake-section dark">
         <div className="container">
-          <p className="eyebrow">OUR APPROACH</p>
           <h2>A placeholder for whatever comes next.</h2>
           <p>
             This section exists only to show how Digital Solutions hands off to the following part

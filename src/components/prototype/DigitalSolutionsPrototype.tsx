@@ -139,7 +139,6 @@ export default function DigitalSolutionsPrototype() {
       </div>
 
       <div className="container ds-intro">
-        <p className="eyebrow">DIGITAL SOLUTIONS</p>
         <h2>Technology that creates real impact.</h2>
       </div>
 

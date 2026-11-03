@@ -1,5 +1,6 @@
 export type Service = { n: string; title: string; desc: string };
-export type Solution = { n: string; title: string; desc: string };
+// headline: *wrapped* words are rendered underlined.
+export type Solution = { n: string; title: string; headline: string; desc: string };
 export type TechCategory = 'Front End' | 'Back End' | 'Mobile' | 'Cloud & Infrastructure' | 'AI & Data' | 'CMS';
 export type TechItem = { src: string; name: string; desc: string };
 // Front End and Back End split their items into Languages vs Frameworks &
@@ -8,13 +9,13 @@ export type TechGroup = { label: string; items: TechItem[] };
 export type TechCategoryContent = TechItem[] | TechGroup[];
 export type Testimonial = { name: string; quote: string };
 export type Stat = { value: number; suffix: string; label: string };
-export type NavLink = { label: string; id: string };
+export type NavLink = { label: string; id: string; gradient?: boolean };
 
 export const navLinks: NavLink[] = [
-  { label: 'About', id: 'about' },
+  { label: 'GenAI', id: 'ai', gradient: true },
   { label: 'What we do', id: 'services' },
   { label: 'Solutions', id: 'solutions' },
-  { label: 'Process', id: 'process' },
+  { label: 'Products', id: 'products' },
   { label: 'Technology', id: 'technology' },
   { label: 'Contact', id: 'contact' },
 ];
@@ -29,10 +30,12 @@ export const services: Service[] = [
 ];
 
 export const solutions: Solution[] = [
-  { n: '01', title: 'Business Transformation', desc: 'Modernise systems and improve the processes that keep your business moving.' },
-  { n: '02', title: 'Automation', desc: 'Reduce repetitive work with reliable, scalable workflows.' },
-  { n: '03', title: 'Data & Intelligence', desc: 'Turn complex data into insight your teams can act on.' },
-  { n: '04', title: 'Integration', desc: 'Connect platforms, APIs and applications into one coherent operation.' },
+  { n: '01', title: 'Agentic AI Development', headline: '*Agentic AI* that plans, decides and acts across your systems', desc: 'Build AI agents that reason over your data, use your tools and complete multi-step work, with people kept in control.' },
+  { n: '02', title: 'GenAI Integrations', headline: '*GenAI integrations* woven into the tools your teams already use', desc: 'Embed generative AI into your existing apps, data and workflows, securely and without a rebuild.' },
+  { n: '03', title: 'Business Transformation', headline: 'Business *transformation*, built around how you actually work', desc: 'Modernise systems and improve the processes that keep your business moving.' },
+  { n: '04', title: 'Automation', headline: '*Automation* that takes *repetitive work* off your team', desc: 'Reduce repetitive work with reliable, scalable workflows.' },
+  { n: '05', title: 'Data & Intelligence', headline: 'Turning scattered data into *intelligence* you can trust', desc: 'Turn complex data into insight your teams can act on.' },
+  { n: '06', title: 'Integration', headline: '*Integration* that connects your platforms into *one operation*', desc: 'Connect platforms, APIs and applications into one coherent operation.' },
 ];
 
 export const stack: Record<TechCategory, TechCategoryContent> = {
@@ -103,6 +106,23 @@ export const stack: Record<TechCategory, TechCategoryContent> = {
   ],
 };
 
+// Dropdown entries for nav items that have one, keyed by nav link id.
+// AI-related entries get the same gradient treatment as the GenAI nav link.
+const dropdownItem = (label: string, href: string) => ({ label, href, gradient: /\b(Gen)?AI\b/.test(label) });
+export const navDropdowns: Record<string, { label: string; href: string; gradient: boolean }[]> = {
+  services: services.map((s) => dropdownItem(s.title, '#services')),
+  solutions: solutions.map((s) => dropdownItem(s.title, '#solutions')),
+  technology: (Object.keys(stack) as TechCategory[]).map((c) => dropdownItem(c, '#technology')),
+};
+
+// Products shown in the Products carousel and the logo strip under the hero.
+// desc is placeholder copy: replace with a real one-liner per product.
+export const products = [
+  { name: 'Zoneberry', logo: '/media/zy1l3chb/zoneberry-white.png', desc: 'A digital product designed, built and supported by Cubo Systems.' },
+  { name: 'Realtr', logo: '/media/byebhoao/realtr_white.png', desc: 'A digital product designed, built and supported by Cubo Systems.' },
+  { name: 'Xelution', logo: '/media/ksmpgull/xelutionwhite.png', desc: 'A digital product designed, built and supported by Cubo Systems.' },
+];
+
 export const testimonials: Testimonial[] = [
   { name: 'ThyssenKrupp Aerospace', quote: 'You guys helped solve million dollar problems. We hope to continue work with you all using your expertise.' },
   { name: 'Hakitaak', quote: 'They have been a very reliable partner throughout the project. We appreciate their technology skills, creative problem solving, straightforward communication, flexibility and dedication to the project.' },
@@ -125,26 +145,17 @@ export const whyCubo = [
   { n: '04', label: 'Practical innovation' },
 ];
 
-export const process = [
-  { title: 'Discover', desc: 'We listen, learn and understand the opportunity.', tags: ['Research', 'Workshops', 'Insight'] },
-  { title: 'Define', desc: 'We shape a clear, viable path forward.', tags: ['Scope', 'Strategy'] },
-  { title: 'Design', desc: 'We create useful, intuitive digital experiences.', tags: ['UX', 'UI', 'Prototyping'] },
-  { title: 'Develop', desc: 'We engineer scalable solutions with care.', tags: ['Engineering', 'Testing'] },
-  { title: 'Deliver', desc: 'We launch, refine and support lasting impact.', tags: ['Launch', 'Support', 'Iteration'] },
-];
-
 export const footerGroups: { title: string; links: { label: string; href: string }[] }[] = [
   {
     title: 'Company',
     links: [
-      { label: 'About', href: '#about' },
       { label: 'Contact', href: '#contact' },
     ],
   },
   {
     title: 'Explore',
     links: navLinks
-      .filter((l) => l.id !== 'about' && l.id !== 'contact')
+      .filter((l) => l.id !== 'contact')
       .map((l) => ({ label: l.label, href: '#' + l.id })),
   },
   {

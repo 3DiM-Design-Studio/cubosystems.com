@@ -53,15 +53,14 @@ function DashboardVisual() {
   );
 }
 
-function WorkflowVisual() {
-  const steps = ['INPUT', 'PROCESS', 'AUTOMATION', 'SYSTEM', 'RESULT'];
+function FlowVisual({ steps, emphasis }: { steps: string[]; emphasis: number }) {
   return (
     <div className="ds-viz ds-viz-flow">
       {steps.map((step, i) => (
         <div className="ds-viz-flow-item" key={step}>
-          <div className={'ds-viz-flow-node' + (i === 2 ? ' emphasis' : '')}>
+          <div className={'ds-viz-flow-node' + (i === emphasis ? ' emphasis' : '')}>
             <span>{step}</span>
-            <span className="ds-dot" style={{ opacity: i === 2 ? 1 : 0.45 }} />
+            <span className="ds-dot" style={{ opacity: i === emphasis ? 1 : 0.45 }} />
           </div>
           {i < steps.length - 1 && <div className="ds-viz-flow-connector" />}
         </div>
@@ -97,22 +96,27 @@ function DataVisual() {
   );
 }
 
-function IntegrationVisual() {
-  const sources = ['CRM', 'ERP', 'API', 'CLOUD', 'DATABASE'];
+function ArchVisual({ sources, core, final }: { sources: string[]; core: string; final: string }) {
   return (
     <div className="ds-viz ds-viz-arch">
       <div className="ds-viz-arch-row">
         {sources.map((s) => <span key={s} className="ds-viz-arch-chip">{s}</span>)}
       </div>
       <div className="ds-viz-arch-connector" />
-      <div className="ds-viz-arch-core">CUBO SYSTEM</div>
+      <div className="ds-viz-arch-core">{core}</div>
       <div className="ds-viz-arch-connector" />
-      <span className="ds-viz-arch-final">Business</span>
+      <span className="ds-viz-arch-final">{final}</span>
     </div>
   );
 }
 
-const visualsByIndex = [DashboardVisual, WorkflowVisual, DataVisual, IntegrationVisual];
+const WorkflowVisual = () => <FlowVisual steps={['INPUT', 'PROCESS', 'AUTOMATION', 'SYSTEM', 'RESULT']} emphasis={2} />;
+const AgentVisual = () => <FlowVisual steps={['GOAL', 'PLAN', 'TOOLS', 'ACT', 'REVIEW']} emphasis={1} />;
+const IntegrationVisual = () => <ArchVisual sources={['CRM', 'ERP', 'API', 'CLOUD', 'DATABASE']} core="CUBO SYSTEM" final="Business" />;
+const GenAIVisual = () => <ArchVisual sources={['CRM', 'DOCS', 'EMAIL', 'ERP', 'DATABASE']} core="GENAI LAYER" final="Your teams" />;
+
+// Order matches `solutions` in content.ts.
+const visualsByIndex = [AgentVisual, GenAIVisual, DashboardVisual, WorkflowVisual, DataVisual, IntegrationVisual];
 
 export default function SolutionVisual({ index }: { index: number }) {
   const Visual = visualsByIndex[index] ?? DashboardVisual;

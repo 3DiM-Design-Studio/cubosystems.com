@@ -1,12 +1,12 @@
 import type { Metadata } from 'next';
-import { Manrope } from 'next/font/google';
+import { Google_Sans_Flex } from 'next/font/google';
 import './globals.css';
 import './site.css';
+import SmoothScroll from '@/components/SmoothScroll';
 
-const manrope = Manrope({
-  variable: '--font-manrope',
+const font = Google_Sans_Flex({
+  variable: '--font-sans',
   subsets: ['latin'],
-  weight: ['400', '500', '600', '700', '800'],
   display: 'swap',
 });
 
@@ -26,8 +26,11 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" className={manrope.variable}>
-      <body>{children}</body>
+    <html lang="en" className={font.variable}>
+      <body>
+        <SmoothScroll />
+        {children}
+      </body>
     </html>
   );
 }

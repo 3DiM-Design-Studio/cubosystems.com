@@ -7,6 +7,7 @@ import TechIcon from './TechIcon';
 import OptionWheel, { type OptionWheelHandle } from './OptionWheel';
 import { stack, type TechCategory, type TechItem, type TechGroup } from '@/lib/content';
 import { usePrefersReducedMotion } from './useReducedMotion';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
 
 const categories = Object.keys(stack) as TechCategory[];
 const DEFAULT_INDEX = categories.indexOf('Mobile');
@@ -47,7 +48,6 @@ export default function Technology() {
     <section id="technology" className="section technology">
       <div className="container">
         <Reveal>
-          <p className="eyebrow orange">TECHNOLOGY STACK</p>
           <h2 id="technology-heading">The right <em className="accent">technology</em>,<br />for the right outcome.</h2>
         </Reveal>
 
@@ -58,8 +58,8 @@ export default function Technology() {
               ref={wheelRef}
               items={categories}
               defaultSelected={DEFAULT_INDEX}
-              textColor="#7A7A7A"
-              activeColor="#FFFFFF"
+              textColor="#8a8a8a"
+              activeColor="#111111"
               side="left"
               fontSize={1.6}
               spacing={1.6}
@@ -101,14 +101,14 @@ export default function Technology() {
                       aria-label="Previous category"
                       disabled={activeIndex === 0}
                       onClick={() => selectIndex(Math.max(activeIndex - 1, 0))}
-                    >‹</button>
+                    ><ChevronLeft size={18} /></button>
                     <button
                       type="button"
                       className="tech-panel-arrow"
                       aria-label="Next category"
                       disabled={activeIndex === categories.length - 1}
                       onClick={() => selectIndex(Math.min(activeIndex + 1, categories.length - 1))}
-                    >›</button>
+                    ><ChevronRight size={18} /></button>
                   </div>
                 </div>
                 {activeGroups.map((group) => (

@@ -9,7 +9,6 @@ export default function Proof() {
       <section className="section why">
         <div className="container split">
           <Reveal variant="left">
-            <p className="eyebrow orange">WHY CUBO</p>
             <h2>Engineering with business <em className="accent">impact</em>.</h2>
           </Reveal>
           <Stagger as="ul" stagger={.06}>

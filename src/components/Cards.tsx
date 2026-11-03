@@ -1,10 +1,10 @@
 'use client';
 
-import { useRef, useState } from 'react';
+import { useState } from 'react';
 import Reveal, { Stagger, StaggerItem } from './Reveal';
 import ServiceIcon from './ServiceIcon';
-import BentoGlow from './BentoGlow';
 import { services } from '@/lib/content';
+import { ChevronRight } from 'lucide-react';
 
 // Bento sizing: masonry columns. Col 1 = 01 (tall, spans rows 1-2). Col 2 =
 // 02 and 03 stacked as two mediums. Col 3 = 05 (tall, spans rows 1-2). Row 3
@@ -41,9 +41,8 @@ function ServiceCard({ index, n, title, desc, openMobile, setOpenMobile }: {
       <div className="service-inner">
         <div className="service-row">
           <ServiceIcon index={index} />
-          <b className="service-chevron" aria-hidden="true">→</b>
+          <ChevronRight className="service-chevron" size={18} aria-hidden="true" />
         </div>
-        <span className="service-num">{n}</span>
         <h3>{title}</h3>
         <p className="service-desc">{desc}</p>
       </div>
@@ -53,31 +52,27 @@ function ServiceCard({ index, n, title, desc, openMobile, setOpenMobile }: {
 
 export default function Cards() {
   const [openMobile, setOpenMobile] = useState<string | null>(null);
-  const gridRef = useRef<HTMLDivElement>(null);
 
   return (
     <section id="services" className="section muted">
       <div className="container">
         <Reveal>
-          <p className="eyebrow orange">WHAT WE DO</p>
           <h2>From business challenges<br />to <em className="accent">engineered</em> solutions.</h2>
         </Reveal>
-        <BentoGlow gridRef={gridRef} />
-        <div ref={gridRef}>
-          <Stagger className="cards" stagger={.07}>
-            {services.map((s, i) => (
-              <ServiceCard
-                key={s.n}
-                index={i}
-                n={s.n}
-                title={s.title}
-                desc={s.desc}
-                openMobile={openMobile}
-                setOpenMobile={setOpenMobile}
-              />
-            ))}
-          </Stagger>
-        </div>
+        <Stagger className="cards" stagger={.07}>
+          {services.map((s, i) => (
+            <ServiceCard
+              key={s.n}
+              index={i}
+              n={s.n}
+              title={s.title}
+              desc={s.desc}
+              openMobile={openMobile}
+              setOpenMobile={setOpenMobile}
+            />
+          ))}
+          {['l1', 'l2', 'r1', 'r2'].map((g) => <div key={g} className={`ghost ghost-${g}`} aria-hidden="true" />)}
+        </Stagger>
       </div>
     </section>
   );

@@ -3,24 +3,15 @@
 import { useEffect, useRef, useState } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
 import Image from 'next/image';
-import { navLinks } from '@/lib/content';
-import { usePrefersReducedMotion } from './useReducedMotion';
+import { navLinks, navDropdowns } from '@/lib/content';
+import { ArrowRight, ChevronDown } from 'lucide-react';
 
 const EASE: [number, number, number, number] = [0.16, 1, 0.3, 1];
 
 export default function Header() {
   const [open, setOpen] = useState(false);
-  const [scrolled, setScrolled] = useState(false);
   const [active, setActive] = useState<string>('');
   const menuButtonRef = useRef<HTMLButtonElement>(null);
-  const reduced = usePrefersReducedMotion();
-
-  useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 40);
-    onScroll();
-    window.addEventListener('scroll', onScroll, { passive: true });
-    return () => window.removeEventListener('scroll', onScroll);
-  }, []);
 
   useEffect(() => {
     const ids = navLinks.map((l) => l.id);
@@ -66,44 +57,38 @@ export default function Header() {
 
   return (
     <motion.header
-      className={'header' + (scrolled ? ' scrolled' : '') + (open ? ' menu-open' : '')}
+      className={'header' + (open ? ' menu-open' : '')}
       initial={{ y: -40, opacity: 0 }}
       animate={{ y: 0, opacity: 1 }}
       transition={{ duration: .6, ease: EASE }}
     >
-      <motion.div
-        className="header-bar"
-        animate={{
-          paddingTop: scrolled ? 12 : 22,
-          paddingBottom: scrolled ? 12 : 22,
-          borderRadius: scrolled ? 2 : 0,
-          backgroundColor: scrolled ? 'rgba(15,15,15,0.85)' : 'rgba(15,15,15,0)',
-          boxShadow: scrolled ? '0 12px 30px rgba(0,0,0,0.35)' : '0 0 0 rgba(0,0,0,0)',
-          borderColor: scrolled ? 'var(--line)' : 'transparent',
-        }}
-        transition={{ duration: reduced ? 0 : .45, ease: EASE }}
-      >
+      <div className="header-bar">
         <a className="brand" href="#home" aria-label="Cubo Systems home">
           <Image src="/media/q5nhltn2/logo.png" alt="Cubo Systems" width={31} height={51} />
           <span>CUBO<br /><small>SYSTEMS</small></span>
         </a>
 
         <nav className="header-nav-desktop" aria-label="Primary">
-          {navLinks.map(({ label, id }) => (
-            <a key={id} href={'#' + id} className={'nav-link' + (active === id ? ' active' : '')}>
-              {label}
-              {active === id && (
-                <motion.span
-                  className="nav-link-indicator"
-                  layoutId="nav-active-indicator"
-                  transition={{ duration: reduced ? 0 : .35, ease: EASE }}
-                />
-              )}
-            </a>
-          ))}
+          {navLinks.map(({ label, id, gradient }) => {
+            const sub = navDropdowns[id];
+            return (
+              <div key={id} className={'nav-item' + (sub ? ' has-dropdown' : '')}>
+                <a href={'#' + id} className={'nav-link' + (gradient ? ' nav-gradient' : '') + (active === id ? ' active' : '')}>
+                  {label}
+                  {sub && <ChevronDown size={14} aria-hidden="true" />}
+                </a>
+                {sub && (
+                  <ul className="nav-dropdown">
+                    {sub.map((item) => (
+                      <li key={item.label}><a href={item.href} className={item.gradient ? 'nav-gradient' : undefined}>{item.label}</a></li>
+                    ))}
+                  </ul>
+                )}
+              </div>
+            );
+          })}
         </nav>
 
-        <a className="button button-small header-cta" href="#contact">Let’s Talk <b>→</b></a>
 
         <button
           ref={menuButtonRef}
@@ -117,7 +102,7 @@ export default function Header() {
           <i className={open ? 'open' : ''}></i>
           <i className={open ? 'open' : ''}></i>
         </button>
-      </motion.div>
+      </div>
 
       <AnimatePresence>
         {open && (
@@ -149,7 +134,7 @@ export default function Header() {
               exit="hidden"
               variants={{ hidden: {}, show: { transition: { staggerChildren: .05, delayChildren: .05 } } }}
             >
-              {navLinks.map(({ label, id }) => (
+              {navLinks.map(({ label, id, gradient }) => (
                 <motion.li
                   key={id}
                   variants={{ hidden: { opacity: 0, y: 14 }, show: { opacity: 1, y: 0 } }}
@@ -157,7 +142,7 @@ export default function Header() {
                 >
                   <a
                     href={'#' + id}
-                    className={'mobile-nav-link' + (active === id ? ' active' : '')}
+                    className={'mobile-nav-link' + (gradient ? ' nav-gradient' : '') + (active === id ? ' active' : '')}
                     onClick={() => setOpen(false)}
                   >
                     {label}
@@ -169,7 +154,7 @@ export default function Header() {
                 transition={{ duration: .35, ease: EASE }}
               >
                 <a className="button mobile-nav-cta" href="#contact" onClick={() => setOpen(false)}>
-                  Let’s Talk <b>→</b>
+                  Let’s Talk <b><ArrowRight size={16} /></b>
                 </a>
               </motion.li>
             </motion.ul>

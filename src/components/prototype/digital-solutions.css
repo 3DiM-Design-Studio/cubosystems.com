@@ -19,7 +19,6 @@
   border-bottom:1px solid var(--line);
 }
 .ds-fake-section.dark{background:var(--cubo-bg-black)}
-.ds-fake-section .eyebrow{font-size:.72rem;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--muted)}
 .ds-fake-section h2{font-size:clamp(2.25rem,4.2vw,3.85rem);letter-spacing:-.045em;line-height:1.04;max-width:740px;margin:14px 0 0}
 .ds-fake-section p{color:var(--muted);line-height:1.72;max-width:560px;margin-top:18px;font-size:1.05rem}
 
@@ -33,22 +32,22 @@
   align-items:center;
   gap:10px;
   padding:10px 16px;
-  background:rgba(15,15,15,.82);
+  background:rgba(255,255,255,.85);
   backdrop-filter:blur(10px);
   border:1px solid var(--line-strong);
   border-radius:999px;
   font-size:.68rem;
-  font-weight:700;
+  font-weight:500;
   letter-spacing:.12em;
   text-transform:uppercase;
   color:var(--muted);
   pointer-events:none;
 }
-.ds-dev-indicator b{color:var(--orange);font-weight:800}
+.ds-dev-indicator b{color:var(--orange);font-weight:500}
 .ds-dev-indicator .ds-dev-count{
   font-variant-numeric:tabular-nums;
   color:var(--ink);
-  font-weight:700;
+  font-weight:500;
   letter-spacing:.02em;
 }
 .ds-dev-indicator .ds-dev-dots{display:flex;gap:5px;margin-left:2px}
@@ -71,7 +70,6 @@
   padding:120px 0 40px;
   text-align:left;
 }
-.ds-intro .eyebrow{font-size:.72rem;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--orange)}
 .ds-intro h2{
   font-size:clamp(2.5rem,4.6vw,4.2rem);
   letter-spacing:-.045em;
@@ -115,7 +113,7 @@
 .ds-panel.is-active{
   border-color:var(--orange-dim);
   background:var(--cubo-bg-panel);
-  box-shadow:0 40px 100px -40px rgba(0,0,0,.6), 0 0 0 1px var(--orange-dim);
+  box-shadow:0 40px 100px -40px rgba(0,0,0,.15), 0 0 0 1px var(--orange-dim);
 }
 
 .ds-panel-glow{
@@ -133,7 +131,7 @@
 .ds-panel-num{
   font-family:ui-monospace,SFMono-Regular,Menlo,monospace;
   font-size:.85rem;
-  font-weight:700;
+  font-weight:500;
   letter-spacing:.04em;
   color:var(--muted);
   display:flex;
@@ -145,12 +143,12 @@
 .ds-panel.is-active .ds-panel-num{color:var(--orange)}
 .ds-panel-num .ds-panel-num-big{
   font-size:1.6rem;
-  font-weight:800;
+  font-weight:500;
   letter-spacing:0;
   transition:transform .5s var(--ease), color .4s var(--ease);
 }
 .ds-panel.is-active .ds-panel-num-big{transform:scale(1.08)}
-.ds-panel-num .ds-panel-num-total{color:var(--muted);font-size:.85rem;font-weight:600}
+.ds-panel-num .ds-panel-num-total{color:var(--muted);font-size:.85rem;font-weight:500}
 
 .ds-panel-title{
   font-size:clamp(1.9rem,2.6vw,2.6rem);
@@ -175,7 +173,7 @@
 }
 .ds-panel-tag{
   font-size:.68rem;
-  font-weight:700;
+  font-weight:500;
   letter-spacing:.1em;
   text-transform:uppercase;
   color:var(--muted);
@@ -204,7 +202,7 @@
 
 .ds-chip{
   font-size:.62rem;
-  font-weight:700;
+  font-weight:500;
   letter-spacing:.08em;
   text-transform:uppercase;
   color:var(--muted);
@@ -236,13 +234,13 @@
   border:1px solid var(--line);
   border-radius:6px;
   padding:10px 14px;
-  background:#ffffff05;
+  background:#00000008;
 }
-.ds-viz-dash-topbar .ds-viz-title{font-size:.72rem;font-weight:700;color:var(--ink);letter-spacing:.02em}
+.ds-viz-dash-topbar .ds-viz-title{font-size:.72rem;font-weight:500;color:var(--ink);letter-spacing:.02em}
 .ds-viz-dash-card{
   border:1px solid var(--line);
   border-radius:6px;
-  background:#ffffff05;
+  background:#00000008;
   padding:16px;
   display:flex;
   flex-direction:column;
@@ -250,16 +248,16 @@
 }
 .ds-viz-dash-card.chart{grid-row:span 1}
 .ds-viz-metric-row{display:flex;align-items:baseline;justify-content:space-between}
-.ds-viz-metric{font-size:1.5rem;font-weight:800;color:var(--ink);letter-spacing:-.02em}
-.ds-viz-metric-label{font-size:.62rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
-.ds-viz-delta{font-size:.68rem;font-weight:700;color:var(--orange)}
+.ds-viz-metric{font-size:1.5rem;font-weight:500;color:var(--ink);letter-spacing:-.02em}
+.ds-viz-metric-label{font-size:.62rem;font-weight:500;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.ds-viz-delta{font-size:.68rem;font-weight:500;color:var(--orange)}
 
 .ds-viz-bars{display:flex;align-items:flex-end;gap:6px;height:56px}
 .ds-viz-bar{flex:1;background:linear-gradient(180deg, var(--orange-strong), var(--orange-dim));border-radius:2px 2px 0 0;opacity:.85}
 .ds-viz-bar.dim{background:var(--line-strong);opacity:.6}
 
 .ds-viz-list{display:flex;flex-direction:column;gap:8px}
-.ds-viz-list-row{display:flex;align-items:center;gap:8px;font-size:.66rem;color:var(--muted);font-weight:600}
+.ds-viz-list-row{display:flex;align-items:center;gap:8px;font-size:.66rem;color:var(--muted);font-weight:500}
 .ds-viz-list-row .ds-viz-bar-thin{flex:1;height:4px;border-radius:2px;background:var(--line-strong);overflow:hidden;position:relative}
 .ds-viz-list-row .ds-viz-bar-thin i{position:absolute;inset:0;background:var(--orange);border-radius:2px}
 
@@ -279,13 +277,13 @@
   max-width:280px;
   border:1px solid var(--line-strong);
   border-radius:6px;
-  background:#ffffff06;
+  background:#0000000a;
   padding:13px 18px;
   display:flex;
   align-items:center;
   justify-content:space-between;
   font-size:.74rem;
-  font-weight:700;
+  font-weight:500;
   letter-spacing:.04em;
   color:var(--ink);
   transition:border-color .3s var(--ease), background .3s var(--ease);
@@ -335,7 +333,7 @@
   border-radius:6px;
   padding:8px 10px;
   font-size:.6rem;
-  font-weight:700;
+  font-weight:500;
   color:var(--muted);
   display:flex;
   align-items:center;
@@ -369,10 +367,10 @@
   border-radius:6px;
   padding:8px 12px;
   font-size:.64rem;
-  font-weight:700;
+  font-weight:500;
   letter-spacing:.03em;
   color:var(--muted);
-  background:#ffffff05;
+  background:#00000008;
 }
 .ds-viz-arch-connector{
   width:1px;
@@ -385,13 +383,13 @@
   border-radius:6px;
   padding:12px 22px;
   font-size:.74rem;
-  font-weight:800;
+  font-weight:500;
   letter-spacing:.04em;
   color:var(--ink);
 }
 .ds-viz-arch-final{
   font-size:.7rem;
-  font-weight:700;
+  font-weight:500;
   letter-spacing:.1em;
   text-transform:uppercase;
   color:var(--muted);

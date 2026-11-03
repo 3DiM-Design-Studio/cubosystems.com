@@ -3,6 +3,7 @@
 import { useState, type FormEvent } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
 import Reveal from './Reveal';
+import { ArrowRight, Check } from 'lucide-react';
 
 type Status = 'idle' | 'sending' | 'success' | 'error';
 
@@ -41,17 +42,15 @@ export default function Contact() {
     <>
       <section className="cta">
         <Reveal variant="scale" className="container">
-          <p className="eyebrow">LET’S BUILD WHAT’S NEXT</p>
           <h2>Have a challenge worth solving?</h2>
           <p>Let’s talk about how technology can move your business forward.</p>
-          <a className="button light" href="#contact">Start a conversation <b>→</b></a>
+          <a className="button light" href="#contact">Start a conversation <b><ArrowRight size={16} /></b></a>
         </Reveal>
       </section>
       <section id="contact" className="section contact">
         <div className="contact-dots" aria-hidden="true" />
         <div className="container split">
           <Reveal variant="left">
-            <p className="eyebrow orange">LET’S TALK</p>
             <h2>Tell us what you’re building.</h2>
             <p className="lede">Tell us about your challenge, your next product, or the process you want to improve. We’ll help you find a practical way forward.</p>
           </Reveal>
@@ -65,13 +64,13 @@ export default function Contact() {
               <label htmlFor="message">How can we help?<span className="field-required" aria-hidden="true"> *</span></label>
             </div>
             <button className="button" type="submit" disabled={status === 'sending'}>
-              {status === 'sending' ? 'Sending…' : 'Send message'} <b>→</b>
+              {status === 'sending' ? 'Sending…' : 'Send message'} <b><ArrowRight size={16} /></b>
             </button>
             <div className="form-status-slot" aria-live="polite">
               <AnimatePresence mode="wait">
                 {status === 'success' && (
                   <motion.p key="success" className="form-status success" initial={{ opacity: 0, y: 6 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }}>
-                    Message sent ✓ — we’ll be in touch soon.
+                    <Check size={16} aria-hidden="true" /> Message sent — we’ll be in touch soon.
                   </motion.p>
                 )}
                 {status === 'error' && (

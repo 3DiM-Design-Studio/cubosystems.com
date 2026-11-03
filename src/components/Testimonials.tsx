@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
 import Reveal from './Reveal';
 import { testimonials } from '@/lib/content';
+import { ArrowLeft, ArrowRight } from 'lucide-react';
 
 export default function Testimonials() {
   const [index, setIndex] = useState(0);
@@ -19,7 +20,6 @@ export default function Testimonials() {
     <section id="testimonials" className="section testimonials">
       <div className="container">
         <Reveal>
-          <p className="eyebrow orange">CLIENT PERSPECTIVES</p>
           <h2>Built on <em className="accent">trusted</em> partnerships.</h2>
         </Reveal>
         <Reveal delay={.1} className="quote">
@@ -39,13 +39,13 @@ export default function Testimonials() {
             </AnimatePresence>
           </div>
           <div className="quote-controls">
-            <button onClick={() => go((index - 1 + testimonials.length) % testimonials.length)} aria-label="Previous testimonial">←</button>
+            <button onClick={() => go((index - 1 + testimonials.length) % testimonials.length)} aria-label="Previous testimonial"><ArrowLeft size={18} /></button>
             <div className="quote-progress" role="progressbar" aria-valuenow={index + 1} aria-valuemin={1} aria-valuemax={testimonials.length}>
               {testimonials.map((_, i) => (
                 <span key={i} className={'quote-dot' + (i === index ? ' active' : '')} />
               ))}
             </div>
-            <button onClick={() => go((index + 1) % testimonials.length)} aria-label="Next testimonial">→</button>
+            <button onClick={() => go((index + 1) % testimonials.length)} aria-label="Next testimonial"><ArrowRight size={18} /></button>
           </div>
         </Reveal>
       </div>
