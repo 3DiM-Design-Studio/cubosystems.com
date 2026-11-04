@@ -4,19 +4,78 @@ import { useRef } from 'react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { useGSAP } from '@gsap/react';
-import { Database, Scale, Mail, UserCheck } from 'lucide-react';
+import { Database, Scale, Mail, UserCheck, FolderOpen, Folder, FileText, FileSpreadsheet, FileImage, FileType } from 'lucide-react';
+import { RiOpenaiFill, RiClaudeFill } from 'react-icons/ri';
 import Reveal from './Reveal';
+import RiveCard from './RiveCard';
 import { useMediaQuery } from './useMediaQuery';
 import { usePrefersReducedMotion } from './useReducedMotion';
 
 gsap.registerPlugin(ScrollTrigger, useGSAP);
 
-const capabilities = [
-  { title: 'Copilots for your teams', desc: 'Assistants that answer questions and take action across your internal tools, with the context they need.' },
-  { title: 'Knowledge & documents', desc: 'Search, summarise and extract from contracts, tickets and reports using retrieval over your own data.' },
-  { title: 'Workflow automation', desc: 'Models that classify, route and draft inside your existing processes, so people focus on decisions.' },
-  { title: 'Guardrails by design', desc: 'Access control, human approval and audit trails built in, so AI stays accountable.' },
+type Motion = 'chat' | 'docs' | 'flow' | 'shield';
+const capabilities: { title: string; desc: string; motion: Motion }[] = [
+  { motion: 'chat', title: 'Copilots for your teams', desc: 'Assistants that answer questions and act across your internal tools.' },
+  { motion: 'docs', title: 'Knowledge & documents', desc: 'Search, summarise and extract from contracts and reports over your own data.' },
+  { motion: 'flow', title: 'Workflow automation', desc: 'Models that classify, route and draft inside your processes.' },
+  { motion: 'shield', title: 'Guardrails by design', desc: 'Access control, human approval and audit trails built in, so AI stays accountable.' },
 ];
+
+// Nested folder tree for the Knowledge card; the agent walks every row in turn (--s): folders light up, files get analysed.
+type Node = { name: string; icon: typeof Folder; depth: number; last?: boolean; rail?: boolean; out?: string };
+const TREE: Node[] = [
+  { name: 'Contracts', icon: FolderOpen, depth: 0 },
+  { name: 'Vendors', icon: FolderOpen, depth: 1 },
+  { name: 'nda-acme.pdf', icon: FileText, depth: 2, rail: true, out: '3 key clauses · 1 risk flagged' },
+  { name: 'supplier-msa.docx', icon: FileType, depth: 2, last: true, rail: true, out: 'Renewal date: 14 Mar 2027' },
+  { name: 'policy-handbook.pdf', icon: FileText, depth: 1, last: true, out: 'Updated 9 Jan · no conflicts' },
+  { name: 'Finance', icon: FolderOpen, depth: 0 },
+  { name: 'Reports', icon: FolderOpen, depth: 1, last: true },
+  { name: 'q3-forecast.xlsx', icon: FileSpreadsheet, depth: 2, out: 'Revenue up 12% vs Q2' },
+  { name: 'site-photos.png', icon: FileImage, depth: 2, last: true, out: '14 photos · 2 need review' },
+];
+
+// Looping CSS/SVG animations, one per capability card (styles: .gm-* in site.css).
+const MOTIONS: Record<Motion, React.ReactNode> = {
+  chat: <RiveCard src="/media/genai/copilot.riv" />,
+  docs: (
+    <div className="gm gm-docs">
+      {TREE.map(({ name, icon: Icon, depth, last, rail, out }, i) => (
+        <span key={name} className={'gm-row d' + depth + (last ? ' last' : '') + (out ? ' file' : ' dir')} style={{ '--s': i } as React.CSSProperties}>
+          {rail && <i className="gm-trunk" />}
+          <Icon size={14} />
+          <span className="gm-txt">
+            <em>{name}</em>
+            {out && (
+              <span className="gm-status">
+                <RiOpenaiFill size={14} className="gpt" />
+                <RiClaudeFill size={14} className="claude" />
+                <i className="a">Analyzing document…</i>
+                <i className="b">{out}</i>
+              </span>
+            )}
+          </span>
+        </span>
+      ))}
+    </div>
+  ),
+  flow: (
+    <div className="gm gm-flow">
+      <span className="gm-rail" />
+      <span className="gm-packet" />
+      <span className="gm-node" /><span className="gm-node" /><span className="gm-node" /><span className="gm-node" />
+    </div>
+  ),
+  shield: (
+    <div className="gm gm-shield">
+      <span className="gm-ring" /><span className="gm-ring" />
+      <svg viewBox="0 0 100 114" fill="none" strokeLinecap="round" strokeLinejoin="round">
+        <path className="gm-shield-body" d="M50 6 90 20v34c0 27-17 45-40 54C27 99 10 81 10 54V20Z" />
+        <path className="gm-check" d="M32 57l13 13 24-27" />
+      </svg>
+    </div>
+  ),
+};
 
 const steps = [
   { icon: Database, text: 'Queried the finance system', done: true },
@@ -67,8 +126,9 @@ export default function GenAI() {
 
       <div className="genai-viewport">
         <div className="genai-track" ref={trackRef}>
-          {capabilities.map(({ title, desc }) => (
+          {capabilities.map(({ title, desc, motion }) => (
             <div key={title} className="genai-card">
+              <div className={'genai-motion' + (motion === 'chat' ? ' is-rive' : motion === 'docs' ? ' is-tree' : '')} aria-hidden="true">{MOTIONS[motion]}</div>
               <h3>{title}</h3>
               <p>{desc}</p>
             </div>

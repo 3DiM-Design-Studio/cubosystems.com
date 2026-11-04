@@ -3,6 +3,7 @@ import { Google_Sans_Flex } from 'next/font/google';
 import './globals.css';
 import './site.css';
 import SmoothScroll from '@/components/SmoothScroll';
+import CookieConsent from '@/components/CookieConsent';
 
 const font = Google_Sans_Flex({
   variable: '--font-sans',
@@ -30,6 +31,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <body>
         <SmoothScroll />
         {children}
+        <CookieConsent />
       </body>
     </html>
   );

@@ -15,9 +15,9 @@ const T_LEDE = 0.85;
 const T_ACTIONS = 1.0;
 const T_SCROLL_CUE = 1.3;
 
-const TITLE: { text?: string; pill?: string; accent?: boolean }[] = [
-  { text: 'We' }, { text: 'build' }, { pill: '/media/4ypgnwjk/culture-2.png' },
-  { text: 'technology' }, { text: 'that' }, { text: 'moves' }, { pill: '/media/y2sdbuba/1.jpg' },
+const TITLE: { text?: string; pill?: string; icon?: string; ratio?: number; accent?: boolean }[] = [
+  { text: 'We' }, { text: 'build' }, { icon: '/media/hero/layers.png', ratio: 800 / 636 },
+  { text: 'technology' }, { text: 'that' }, { text: 'moves' }, { icon: '/media/hero/bolt.png', ratio: 436 / 800 },
   { text: 'businesses' }, { text: 'forward.', accent: true },
 ];
 
@@ -43,12 +43,13 @@ export default function Hero() {
             <motion.span
               key={i}
               aria-hidden="true"
-              className={w.pill ? 'hero-pill' : w.accent ? 'hero-accent' : undefined}
+              className={w.pill ? 'hero-pill' : w.icon ? 'hero-icon' : w.accent ? 'hero-accent' : undefined}
+              style={w.icon ? ({ aspectRatio: w.ratio, '--src': `url(${w.icon})` } as React.CSSProperties) : undefined}
               initial={{ opacity: 0, y: 28 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: .8, delay: T_TITLE + i * .07, ease: EASE }}
             >
-              {w.pill ? <Image src={w.pill} alt="" fill sizes="160px" /> : w.text}
+              {w.pill ? <Image src={w.pill} alt="" fill sizes="160px" /> : w.icon ? <Image src={w.icon} alt="" fill sizes="120px" /> : w.text}
             </motion.span>
           ))}
         </h1>

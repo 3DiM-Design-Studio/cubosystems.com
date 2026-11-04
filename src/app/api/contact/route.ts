@@ -2,6 +2,9 @@ import { NextResponse } from 'next/server';
 import { Resend } from 'resend';
 
 type ContactPayload = {
+  firstName?: string;
+  lastName?: string;
+  services?: string[];
   name?: string;
   email?: string;
   phone?: string;
@@ -11,7 +14,8 @@ type ContactPayload = {
 
 export async function POST(request: Request) {
   const body = (await request.json()) as ContactPayload;
-  const { name, email, phone, company, message } = body;
+  const { firstName, lastName, services, email, phone, company, message } = body;
+  const name = [firstName, lastName].filter(Boolean).join(' ') || body.name;
 
   if (!name || !email || !message) {
     return NextResponse.json({ error: 'Missing required fields.' }, { status: 400 });
@@ -38,6 +42,7 @@ export async function POST(request: Request) {
       `Email: ${email}`,
       phone ? `Phone: ${phone}` : null,
       company ? `Company: ${company}` : null,
+      services?.length ? `Services: ${services.join(', ')}` : null,
       '',
       message,
     ].filter(Boolean).join('\n'),

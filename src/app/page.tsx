@@ -9,7 +9,6 @@ import Technology from '@/components/Technology';
 import Proof from '@/components/Proof';
 import Testimonials from '@/components/Testimonials';
 import Contact from '@/components/Contact';
-import FinalCta from '@/components/FinalCta';
 import Footer from '@/components/Footer';
 
 export default function Home() {
@@ -27,7 +26,6 @@ export default function Home() {
         <Proof />
         <Testimonials />
         <Contact />
-        <FinalCta />
       </main>
       <Footer />
     </>

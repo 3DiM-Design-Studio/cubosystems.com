@@ -11,7 +11,28 @@ const EASE: [number, number, number, number] = [0.16, 1, 0.3, 1];
 export default function Header() {
   const [open, setOpen] = useState(false);
   const [active, setActive] = useState<string>('');
+  const [inFooter, setInFooter] = useState(false);
   const menuButtonRef = useRef<HTMLButtonElement>(null);
+
+  // Hide the navbar once the footer's top reaches the navbar's position.
+  useEffect(() => {
+    const footer = document.querySelector('footer');
+    if (!footer) return;
+    let raf = 0;
+    const check = () => {
+      raf = 0;
+      setInFooter(footer.getBoundingClientRect().top <= 88);
+    };
+    const onScroll = () => { if (!raf) raf = requestAnimationFrame(check); };
+    check();
+    window.addEventListener('scroll', onScroll, { passive: true });
+    window.addEventListener('resize', onScroll);
+    return () => {
+      window.removeEventListener('scroll', onScroll);
+      window.removeEventListener('resize', onScroll);
+      if (raf) cancelAnimationFrame(raf);
+    };
+  }, []);
 
   useEffect(() => {
     const ids = navLinks.map((l) => l.id);
@@ -59,8 +80,9 @@ export default function Header() {
     <motion.header
       className={'header' + (open ? ' menu-open' : '')}
       initial={{ y: -40, opacity: 0 }}
-      animate={{ y: 0, opacity: 1 }}
-      transition={{ duration: .6, ease: EASE }}
+      animate={inFooter && !open ? { y: -100, opacity: 0 } : { y: 0, opacity: 1 }}
+      transition={{ duration: .45, ease: EASE }}
+      style={{ pointerEvents: inFooter && !open ? 'none' : undefined }}
     >
       <div className="header-bar">
         <a className="brand" href="#home" aria-label="Cubo Systems home">
