@@ -22,10 +22,10 @@ const TITLE: { text?: string; pill?: string; icon?: string; ratio?: number; acce
 ];
 
 const PANEL = [
-  { src: '/media/04fdzbo3/2.jpg', alt: 'Digital marketing interface on a tablet' },
-  { src: '/media/4ypgnwjk/culture-2.png', alt: 'The Cubo team at work' },
-  { src: '/media/y2sdbuba/1.jpg', alt: 'Human and robot hand touching a network' },
-  { src: '/media/55uiwvsw/businessman-go.png', alt: 'Business professional' },
+  { src: '/media/hero/team-outdoor-laptops.jpg', alt: 'The Cubo team working together on laptops outdoors' },
+  { src: '/media/hero/team-certificate.jpg', alt: 'Cubo team members celebrating with a certificate' },
+  { src: '/media/hero/team-hands-up.jpg', alt: 'The Cubo team cheering at their desks' },
+  { src: '/media/hero/team-window-laptop.jpg', alt: 'Two Cubo colleagues collaborating by a window' },
 ];
 
 export default function Hero() {
