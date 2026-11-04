@@ -714,7 +714,10 @@ blockquote{font-size:clamp(1.4rem,2.8vw,2.3rem);line-height:1.4;letter-spacing:-
 
 @media(max-width:800px){
   .header-nav-desktop{display:none}
-  .menu{display:grid;gap:5px;position:relative;z-index:6}
+  .menu{display:grid;gap:5px;place-content:center;min-width:44px;min-height:44px;margin-right:-9px;position:relative;z-index:6}
+  /* Touch: grow the tap area of small text links to 44px without changing the layout. */
+  .footer-col a,.footer-bar a,.contact-info a,.text-link{position:relative}
+  .footer-col a::after,.footer-bar a::after,.contact-info a::after,.text-link::after{content:'';position:absolute;inset:-12px -6px}
   .menu i{display:block;width:26px;height:2px;background:var(--ink);transition:background var(--t-hover) var(--ease),transform var(--t-hover) var(--ease)}
 
   .hero{padding:130px 0 80px;gap:40px}
@@ -817,7 +820,7 @@ blockquote{font-size:clamp(1.4rem,2.8vw,2.3rem);line-height:1.4;letter-spacing:-
 .cookie-switch input:disabled{cursor:not-allowed}
 .cookie-switch input:disabled + span{opacity:.55}
 .cookie-switch input:focus-visible + span{outline:2px solid var(--orange);outline-offset:2px}
-@media(max-width:520px){.cookie{left:12px;right:12px;bottom:12px;width:auto}}
+@media(max-width:520px){.cookie{left:12px;right:12px;bottom:12px;width:auto}.footer-cols{grid-template-columns:1fr;gap:32px}}
 
 .gm-row.file,.gm-row.file em,.gm-row.dir em,.gm-status,.gm-status i{animation-timing-function:ease-in-out}
 
