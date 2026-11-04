@@ -7,10 +7,10 @@ import { stats } from '@/lib/content';
 // Mosaic: stat tiles and photo tiles interleaved on one grid. Placement per
 // tile (m1..m9) lives in site.css.
 const IMAGES = [
-  '/media/gvrjckgh/culture-1.png',
-  '/media/04fdzbo3/2.jpg',
-  '/media/hfkgbaya/culture-3.png',
-  '/media/y2sdbuba/1.jpg',
+  '/media/proof/team-office.jpg',
+  '/media/proof/award-handover.jpg',
+  '/media/proof/team-outdoor-alt.jpg',
+  '/media/hero/team-window-laptop.jpg',
   '/media/4ypgnwjk/culture-2.png',
 ];
 type Tile = { kind: 'img'; src: string } | { kind: 'stat'; i: number };
