@@ -25,7 +25,7 @@ export const services: Service[] = [
   { n: '01', title: 'Product Innovation & Technology Management', desc: 'Cloud-ready products and technology roadmaps built around your business priorities.' },
   { n: '02', title: 'Consultancy & Process Management', desc: 'Practical guidance that makes complex processes simpler, faster and more reliable.' },
   { n: '03', title: 'Advanced BI & Analytics', desc: 'Convert business data into clear, decision-ready intelligence.' },
-  { n: '04', title: 'AI, Blockchain & IoT', desc: 'Apply emerging technologies where they create genuine operational value.' },
+  { n: '04', title: 'Agentic AI & AI Development', desc: 'AI agents that plan, decide and act across your systems, and generative AI built into the tools your teams already use, with people kept in control.' },
   { n: '05', title: 'Software Engineering & Development', desc: 'Design, build, test and deploy resilient digital products.' },
   { n: '06', title: 'Research & Development', desc: 'Continuously explore better technologies and more effective solutions.' },
 ];
@@ -103,8 +103,10 @@ export const stack: Record<TechCategory, TechCategoryContent> = {
 // Dropdown entries for nav items that have one, keyed by nav link id.
 // AI-related entries get the same gradient treatment as the GenAI nav link.
 const dropdownItem = (label: string, href: string) => ({ label, href, gradient: /\b(Gen)?AI\b/.test(label) });
+// AI service first, matching its top spot in the What we do grid (sort is stable).
+const servicesAiFirst = [...services].sort((a, b) => Number(/\bAI\b/.test(b.title)) - Number(/\bAI\b/.test(a.title)));
 export const navDropdowns: Record<string, { label: string; href: string; gradient: boolean }[]> = {
-  services: services.map((s) => dropdownItem(s.title, '#services')),
+  services: servicesAiFirst.map((s) => dropdownItem(s.title, '#services')),
   solutions: solutions.map((s) => dropdownItem(s.title, '#solutions')),
   technology: (Object.keys(stack) as TechCategory[]).map((c) => dropdownItem(c, '#technology')),
 };
@@ -154,7 +156,7 @@ export const contactBlocks: ContactBlock[] = [
 
 export const footerGroups: { title: string; links: { label: string; href: string; gradient?: boolean; icon?: ContactBlock['icon'] }[] }[] = [
   { title: 'Sitemap', links: navLinks.map((l) => ({ label: l.label, href: '#' + l.id, gradient: l.gradient })) },
-  { title: 'Services', links: services.map((s) => ({ label: s.title, href: '#services' })) },
+  { title: 'Services', links: servicesAiFirst.map((s) => ({ label: s.title, href: '#services' })) },
   // Reuses the contact blocks so the real details only need entering once.
   { title: 'Contact', links: contactBlocks.filter((b) => b.icon !== 'link').flatMap((b) => b.links.map((l) => ({ ...l, icon: b.icon }))) },
 ];

@@ -59,13 +59,7 @@ const MOTIONS: Record<Motion, React.ReactNode> = {
       ))}
     </div>
   ),
-  flow: (
-    <div className="gm gm-flow">
-      <span className="gm-rail" />
-      <span className="gm-packet" />
-      <span className="gm-node" /><span className="gm-node" /><span className="gm-node" /><span className="gm-node" />
-    </div>
-  ),
+  flow: <RiveCard src="/media/genai/workflow.riv" />,
   shield: (
     <div className="gm gm-shield">
       <span className="gm-ring" /><span className="gm-ring" />
@@ -128,7 +122,7 @@ export default function GenAI() {
         <div className="genai-track" ref={trackRef}>
           {capabilities.map(({ title, desc, motion }) => (
             <div key={title} className="genai-card">
-              <div className={'genai-motion' + (motion === 'chat' ? ' is-rive' : motion === 'docs' ? ' is-tree' : '')} aria-hidden="true">{MOTIONS[motion]}</div>
+              <div className={'genai-motion' + (motion === 'chat' || motion === 'flow' ? ' is-rive' : motion === 'docs' ? ' is-tree' : '')} aria-hidden="true">{MOTIONS[motion]}</div>
               <h3>{title}</h3>
               <p>{desc}</p>
             </div>

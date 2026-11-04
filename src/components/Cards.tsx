@@ -16,7 +16,7 @@ const BENTO_PLACEMENT: Record<number, string> = {
   1: 'place-02', // medium, col 2 top
   2: 'place-03', // medium, col 2 bottom
   4: 'place-05', // tall, col 3
-  3: 'place-04', // vertical, row 3
+  3: 'place-04', // wide, row 3, cols 1-2 (agentic AI)
   5: 'place-06', // vertical, row 3, wider
 };
 
